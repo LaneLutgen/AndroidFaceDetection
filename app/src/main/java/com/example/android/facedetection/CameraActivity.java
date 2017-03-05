@@ -4,8 +4,11 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.Camera;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.content.Context;
+
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -15,6 +18,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_camera);
 
         // Create an instance of Camera
@@ -38,7 +42,16 @@ public class CameraActivity extends AppCompatActivity {
 
     public Camera getCamera(){
         Camera c = null;
-        c = Camera.open(0);
+        Camera.CameraInfo info = new Camera.CameraInfo();
+
+        int cameraCount = Camera.getNumberOfCameras();
+
+        for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
+            Camera.getCameraInfo(camIdx, info);
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                c = Camera.open(camIdx);
+            }
+        }
         return c;
     }
 }
