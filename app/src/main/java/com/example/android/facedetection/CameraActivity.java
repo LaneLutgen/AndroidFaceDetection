@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.content.Context;
+import android.media.FaceDetector;
 
 
 public class CameraActivity extends AppCompatActivity {
@@ -23,6 +24,9 @@ public class CameraActivity extends AppCompatActivity {
 
         // Create an instance of Camera
         mCamera = getCamera();
+        mCamera.setDisplayOrientation(90);
+        mCamera.setFaceDetectionListener(new CustomFaceDetectionListener());
+        mCamera.startFaceDetection();
 
         // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
