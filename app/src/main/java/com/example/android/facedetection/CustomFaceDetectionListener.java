@@ -12,15 +12,12 @@ import java.util.*;
 public class CustomFaceDetectionListener implements Camera.FaceDetectionListener{
 
     private List<Rect> faceRects;
+    private Point leftEye;
+    private Point rightEye;
 
     @Override
     public void onFaceDetection(Camera.Face[] faces, Camera camera) {
-        if (faces.length == 0) {
-            //System.out.println("No faces detected");
-        } else if (faces.length > 0) {
-            //System.out.println("Faces Detected = " +
-            //        String.valueOf(faces.length));
-
+        if (faces.length > 0) {
             faceRects = new ArrayList<Rect>();
 
             for (int i = 0; i < faces.length; i++) {
@@ -30,11 +27,22 @@ public class CustomFaceDetectionListener implements Camera.FaceDetectionListener
                 int bottom = faces[i].rect.bottom;
                 Rect uRect = new Rect(left, top, right, bottom);
                 faceRects.add(uRect);
+
+                leftEye = faces[i].leftEye;
+                rightEye = faces[i].rightEye;
             }
         }
     }
 
     public List<Rect> getFacesAsRectangles(){
         return faceRects;
+    }
+
+    public Point getLeftEyeCoord(){
+        return leftEye;
+    }
+
+    public Point getRightEyeCoord(){
+        return rightEye;
     }
 }

@@ -5,11 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.hardware.Camera;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 
 import java.util.List;
@@ -21,21 +19,31 @@ import java.util.List;
 
 public class FaceDetectionView extends View {
 
-    private Paint paint = new Paint();
+    private Paint facePaint = new Paint();
+    private Paint eyePaint = new Paint();
     private List<Rect> rectangles;
+    private Point leftEyePoint;
+    private Point rightEyePoint;
     private CustomFaceDetectionListener listener;
 
     public FaceDetectionView(Context context, CustomFaceDetectionListener listener) {
         super(context);
         this.listener = listener;
+
+        facePaint.setColor(Color.RED);
+        facePaint.setStyle(Paint.Style.STROKE);
+        facePaint.setStrokeWidth(3.0f);
+
+        eyePaint.setColor(Color.GREEN);
+        eyePaint.setStyle(Paint.Style.STROKE);
+        eyePaint.setStrokeWidth(3.0f);
     }
 
     @Override
     public void onDraw(Canvas canvas){
-        paint.setColor(Color.YELLOW);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(3.0f);
         rectangles = listener.getFacesAsRectangles();
+        leftEyePoint = listener.getLeftEyeCoord();
+        rightEyePoint = listener.getRightEyeCoord();
         if(rectangles != null){
             for(Rect rect: rectangles){
                 RectF rectF = new RectF(rect);
@@ -46,7 +54,8 @@ public class FaceDetectionView extends View {
                 matrix.postTranslate(this.getWidth() / 2f, this.getHeight() / 2f);
                 matrix.mapRect(rectF);
 
-                canvas.drawRect(rectF, paint);
+                canvas.drawRect(rectF, facePaint);
+                canvas.drawRect(leftEyePoint.x-50,leftEyePoint.y-50,leftEyePoint.x+50,leftEyePoint.y+50,eyePaint);
             }
         }
 
