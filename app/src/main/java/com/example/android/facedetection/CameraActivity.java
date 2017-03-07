@@ -1,6 +1,7 @@
 package com.example.android.facedetection;
 
 import android.content.pm.PackageManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.hardware.Camera;
@@ -15,6 +16,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private Camera mCamera;
     private CameraPreview mPreview;
+    private CustomFaceDetectionListener faceDetectionListener;
+    private FaceDetectionView faceView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,16 +25,20 @@ public class CameraActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_camera);
 
+        faceDetectionListener = new CustomFaceDetectionListener();
+
         // Create an instance of Camera
         mCamera = getCamera();
         mCamera.setDisplayOrientation(90);
-        mCamera.setFaceDetectionListener(new CustomFaceDetectionListener());
+        mCamera.setFaceDetectionListener(faceDetectionListener);
         mCamera.startFaceDetection();
 
         // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
+        faceView = new FaceDetectionView(this, faceDetectionListener);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
+        preview.addView(faceView);
     }
 
     private boolean checkCameraHardware() {

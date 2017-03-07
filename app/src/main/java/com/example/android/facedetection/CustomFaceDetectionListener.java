@@ -10,15 +10,17 @@ import java.util.*;
  */
 
 public class CustomFaceDetectionListener implements Camera.FaceDetectionListener{
+
+    private List<Rect> faceRects;
+
     @Override
     public void onFaceDetection(Camera.Face[] faces, Camera camera) {
         if (faces.length == 0) {
-            System.out.println("No faces detected");
+            //System.out.println("No faces detected");
         } else if (faces.length > 0) {
-            System.out.println("Faces Detected = " +
-                    String.valueOf(faces.length));
+            //System.out.println("Faces Detected = " +
+            //        String.valueOf(faces.length));
 
-            List<Rect> faceRects;
             faceRects = new ArrayList<Rect>();
 
             for (int i = 0; i < faces.length; i++) {
@@ -30,5 +32,9 @@ public class CustomFaceDetectionListener implements Camera.FaceDetectionListener
                 faceRects.add(uRect);
             }
         }
+    }
+
+    public List<Rect> getFacesAsRectangles(){
+        return faceRects;
     }
 }
