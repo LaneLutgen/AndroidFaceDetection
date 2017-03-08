@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.view.View;
 
 import java.util.List;
+import java.util.ListIterator;
 
 
 /**
@@ -22,8 +23,8 @@ public class FaceDetectionView extends View {
     private Paint facePaint = new Paint();
     private Paint eyePaint = new Paint();
     private List<Rect> rectangles;
-    private Point leftEyePoint;
-    private Point rightEyePoint;
+    private List<Rect> leftEyePoint;
+    private List<Rect> rightEyePoint;
     private CustomFaceDetectionListener listener;
 
     public FaceDetectionView(Context context, CustomFaceDetectionListener listener) {
@@ -55,7 +56,34 @@ public class FaceDetectionView extends View {
                 matrix.mapRect(rectF);
 
                 canvas.drawRect(rectF, facePaint);
-                canvas.drawRect(leftEyePoint.x-50,leftEyePoint.y-50,leftEyePoint.x+50,leftEyePoint.y+50,eyePaint);
+            }
+        }
+
+        if(leftEyePoint != null){
+            for(Rect rect: leftEyePoint){
+                RectF rectF = new RectF(rect);
+                Matrix matrix = new Matrix();
+                matrix.setScale(-1, 1);
+                matrix.postRotate(90);
+                matrix.postScale(this.getWidth() / 2000f, this.getHeight() / 2000f);
+                matrix.postTranslate(this.getWidth() / 2f, this.getHeight() / 2f);
+                matrix.mapRect(rectF);
+
+                canvas.drawRect(rectF, eyePaint);
+            }
+        }
+
+        if(rightEyePoint != null){
+            for(Rect rect: rightEyePoint){
+                RectF rectF = new RectF(rect);
+                Matrix matrix = new Matrix();
+                matrix.setScale(-1, 1);
+                matrix.postRotate(90);
+                matrix.postScale(this.getWidth() / 2000f, this.getHeight() / 2000f);
+                matrix.postTranslate(this.getWidth() / 2f, this.getHeight() / 2f);
+                matrix.mapRect(rectF);
+
+                canvas.drawRect(rectF, eyePaint);
             }
         }
 
