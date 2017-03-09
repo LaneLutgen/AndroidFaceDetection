@@ -1,15 +1,9 @@
 package com.example.android.facedetection;
 
-import android.content.pm.PackageManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.hardware.Camera;
-import android.view.Window;
-import android.view.WindowManager;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
-import android.content.Context;
-import android.media.FaceDetector;
 
 
 public class CameraActivity extends AppCompatActivity {
@@ -27,28 +21,16 @@ public class CameraActivity extends AppCompatActivity {
 
         faceDetectionListener = new CustomFaceDetectionListener();
 
-        // Create an instance of Camera
         mCamera = getCamera();
         mCamera.setDisplayOrientation(90);
         mCamera.setFaceDetectionListener(faceDetectionListener);
         mCamera.startFaceDetection();
 
-        // Create our Preview view and set it as the content of our activity.
         mPreview = new CameraPreview(this, mCamera);
         faceView = new FaceDetectionView(this, faceDetectionListener);
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
         preview.addView(faceView);
-    }
-
-    private boolean checkCameraHardware() {
-        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
     }
 
     public Camera getCamera(){

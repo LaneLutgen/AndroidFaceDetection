@@ -1,15 +1,13 @@
 package com.example.android.facedetection;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.hardware.Camera;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

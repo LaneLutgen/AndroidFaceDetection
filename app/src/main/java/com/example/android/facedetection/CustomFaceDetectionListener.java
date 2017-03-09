@@ -1,11 +1,10 @@
 package com.example.android.facedetection;
 
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
-import android.graphics.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lane on 3/6/2017.
