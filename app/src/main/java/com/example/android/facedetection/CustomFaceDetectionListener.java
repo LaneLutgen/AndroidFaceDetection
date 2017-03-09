@@ -30,11 +30,11 @@ public class CustomFaceDetectionListener implements Camera.FaceDetectionListener
                 int right = faces[i].rect.right;
                 int top = faces[i].rect.top;
                 int bottom = faces[i].rect.bottom;
-                Rect uRect = new Rect(left, top, right, bottom);
-                faceRects.add(uRect);
+                Rect faceRect = new Rect(left, top, right, bottom);
+                faceRects.add(faceRect);
 
-                Rect eyearea_right = new Rect(uRect.left + (uRect.width()/2), uRect.top + (uRect.width()/4), uRect.right- (uRect.width()/4), uRect.bottom - uRect.width());
-                Rect eyearea_left = new Rect(uRect.left + (uRect.width()/2), uRect.top + uRect.width(), uRect.right- (uRect.width()/4), uRect.bottom - + (uRect.width()/4));
+                Rect eyearea_right = new Rect(faceRect.left + (faceRect.width()/2), faceRect.top + (faceRect.width()/4), faceRect.right- (faceRect.width()/4), faceRect.bottom - faceRect.width());
+                Rect eyearea_left = new Rect(faceRect.left + (faceRect.width()/2), faceRect.top + faceRect.width(), faceRect.right- (faceRect.width()/4), faceRect.bottom - + (faceRect.width()/4));
                 leftEyes.add(eyearea_left);
                 rightEyes.add(eyearea_right);
 
@@ -46,11 +46,11 @@ public class CustomFaceDetectionListener implements Camera.FaceDetectionListener
         return faceRects;
     }
 
-    public List<Rect> getLeftEyeCoord(){
+    public List<Rect> getLeftEyeCoords(){
         return leftEyes;
     }
 
-    public List<Rect> getRightEyeCoord(){
+    public List<Rect> getRightEyeCoords(){
         return rightEyes;
     }
 }

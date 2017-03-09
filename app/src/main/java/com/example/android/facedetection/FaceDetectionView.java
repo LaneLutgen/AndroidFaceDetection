@@ -20,9 +20,9 @@ public class FaceDetectionView extends View {
 
     private Paint facePaint = new Paint();
     private Paint eyePaint = new Paint();
-    private List<Rect> rectangles;
-    private List<Rect> leftEyePoint;
-    private List<Rect> rightEyePoint;
+    private List<Rect> faces;
+    private List<Rect> leftEyes;
+    private List<Rect> rightEyes;
     private CustomFaceDetectionListener listener;
 
     public FaceDetectionView(Context context, CustomFaceDetectionListener listener) {
@@ -40,11 +40,11 @@ public class FaceDetectionView extends View {
 
     @Override
     public void onDraw(Canvas canvas){
-        rectangles = listener.getFacesAsRectangles();
-        leftEyePoint = listener.getLeftEyeCoord();
-        rightEyePoint = listener.getRightEyeCoord();
-        if(rectangles != null){
-            for(Rect rect: rectangles){
+        faces = listener.getFacesAsRectangles();
+        leftEyes = listener.getLeftEyeCoords();
+        rightEyes = listener.getRightEyeCoords();
+        if(faces != null){
+            for(Rect rect: faces){
                 RectF rectF = new RectF(rect);
                 Matrix matrix = new Matrix();
                 matrix.setScale(-1, 1);
@@ -57,8 +57,8 @@ public class FaceDetectionView extends View {
             }
         }
 
-        if(leftEyePoint != null){
-            for(Rect rect: leftEyePoint){
+        if(leftEyes != null){
+            for(Rect rect: leftEyes){
                 RectF rectF = new RectF(rect);
                 Matrix matrix = new Matrix();
                 matrix.setScale(-1, 1);
@@ -71,8 +71,8 @@ public class FaceDetectionView extends View {
             }
         }
 
-        if(rightEyePoint != null){
-            for(Rect rect: rightEyePoint){
+        if(rightEyes != null){
+            for(Rect rect: rightEyes){
                 RectF rectF = new RectF(rect);
                 Matrix matrix = new Matrix();
                 matrix.setScale(-1, 1);
